@@ -25,7 +25,7 @@ public class Gun : MonoBehaviour
         {
             GameObject bullet = Instantiate(_bulletPrefab, _spawnBullet.position, Quaternion.identity);
             bullet.GetComponent<Rigidbody>().AddForce(_camera.transform.forward * _speedBullet);
-            Destroy(bullet, 15f);
+            Destroy(bullet, 2f);
         }
     }
 }

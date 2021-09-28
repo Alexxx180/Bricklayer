@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -15,6 +16,20 @@ public class PlayerMovement : MonoBehaviour
     const byte maxJumps = 1;
     private Vector3 _velocity;
     private bool _isGrounded;
+    public Slider health;
+
+    private byte vulnerability = 8;
+    void OnCollisionEnter(Collision collision)
+    {
+        vulnerability--;
+        health.value = vulnerability;
+        if (vulnerability <= 0)
+        {
+            Application.Quit();
+            Destroy(gameObject);
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -25,7 +40,6 @@ public class PlayerMovement : MonoBehaviour
         Vector3 move = transform.right * x + transform.forward * z;
 
         _controller.Move(move * _speed * Time.deltaTime);
-        //jumps < 1 && 
         if (Input.GetButtonDown("Jump") && jumps < maxJumps)
         {
             _velocity.y = Mathf.Sqrt(_jumpHeight * _gravity * -2);

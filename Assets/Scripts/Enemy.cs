@@ -9,6 +9,15 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float distance;
 
     private NavMeshAgent _agent;
+    private byte vulnerability = 4;
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Ball"))
+            vulnerability--;
+        if (vulnerability <= 0)
+            Destroy(gameObject);
+    }
 
     private void Awake()
     {
