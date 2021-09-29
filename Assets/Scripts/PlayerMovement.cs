@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
@@ -17,16 +18,19 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 _velocity;
     private bool _isGrounded;
     public Slider health;
+    public Text hp;
 
     private byte vulnerability = 8;
     void OnCollisionEnter(Collision collision)
     {
         vulnerability--;
         health.value = vulnerability;
+        hp.text = (100 / 8 * vulnerability) + " / 100";
         if (vulnerability <= 0)
         {
             Application.Quit();
             Destroy(gameObject);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
 

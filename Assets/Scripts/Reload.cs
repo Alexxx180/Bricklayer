@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class Reload : MonoBehaviour
@@ -17,6 +15,10 @@ public class Reload : MonoBehaviour
         
     }
     private void OnTriggerEnter(Collider other)
+    {
+        ReloadLevel();
+    }
+    public void ReloadLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }

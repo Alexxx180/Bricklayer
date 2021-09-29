@@ -19,6 +19,7 @@ public class LoadLevel : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        SceneManager.LoadScene(nameScene);
+        if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
+            SceneManager.LoadScene(nameScene);
     }
 }
