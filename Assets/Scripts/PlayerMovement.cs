@@ -20,15 +20,15 @@ public class PlayerMovement : MonoBehaviour
     public Slider health;
     public Text hp;
 
-    private byte vulnerability = 8;
-    void OnCollisionEnter(Collision collision)
+    private byte vulnerability = 100;
+
+    public void OnCollisionEnter(Collision collision)
     {
         vulnerability--;
         health.value = vulnerability;
-        hp.text = (100 / 8 * vulnerability) + " / 100";
+        hp.text = vulnerability + " / 100";
         if (vulnerability <= 0)
         {
-            Application.Quit();
             Destroy(gameObject);
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }

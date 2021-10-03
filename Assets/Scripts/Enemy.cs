@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
@@ -9,14 +7,19 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float distance;
 
     private NavMeshAgent _agent;
-    private byte vulnerability = 4;
+    public ushort health = 35;
 
-    void OnCollisionEnter(Collision collision)
+    public void TakeDamage(ushort damage)
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Ball"))
-            vulnerability--;
-        if (vulnerability <= 0)
-            Destroy(gameObject);
+        if (health - damage <= 0)
+            Die();
+        else
+            health -= damage;
+    }
+
+    void Die()
+    {
+        Destroy(gameObject);
     }
 
     private void Awake()
