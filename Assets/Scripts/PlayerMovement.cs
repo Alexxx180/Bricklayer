@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -17,22 +15,6 @@ public class PlayerMovement : MonoBehaviour
     const byte maxJumps = 1;
     private Vector3 _velocity;
     private bool _isGrounded;
-    public Slider health;
-    public Text hp;
-
-    private byte vulnerability = 100;
-
-    public void OnCollisionEnter(Collision collision)
-    {
-        vulnerability--;
-        health.value = vulnerability;
-        hp.text = vulnerability + " / 100";
-        if (vulnerability <= 0)
-        {
-            Destroy(gameObject);
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        }
-    }
 
     // Update is called once per frame
     void Update()

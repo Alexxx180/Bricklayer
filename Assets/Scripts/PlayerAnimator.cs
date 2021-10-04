@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerAnimator : MonoBehaviour
 {
@@ -8,7 +6,12 @@ public class PlayerAnimator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _animator.SetBool("isRun", Input.GetKey(KeyCode.W));
+        _animator.SetBool("isRun", KD(KeyCode.W) || KD(KeyCode.A) || KD(KeyCode.S) || KD(KeyCode.D));
+        Debug.Log(_animator.GetBool("isRun"));
         _animator.SetBool("isAttack", Input.GetButtonDown("Fire1"));
+    }
+    private bool KD(KeyCode code)
+    {
+        return Input.GetKeyDown(code);
     }
 }
