@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour
 
     private NavMeshAgent _agent;
     public ushort health = 35;
+    public byte damage = 12;
 
     public void TakeDamage(ushort damage)
     {
