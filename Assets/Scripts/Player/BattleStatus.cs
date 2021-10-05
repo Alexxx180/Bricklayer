@@ -13,7 +13,13 @@ public class BattleStatus : MonoBehaviour
     private byte MAX_AP = 100;
 
     private byte vulnerability = 100;
-    private byte shield = 100;
+    private byte shield = 0;
+
+    private void Start()
+    {
+        vulnerability = Convert.ToByte(health.value);
+        shield = Convert.ToByte(armor.value);
+    }
 
     public void OnCollisionEnter(Collision collision)
     {
@@ -22,20 +28,21 @@ public class BattleStatus : MonoBehaviour
         Enemy enemy = collision.transform.GetComponent<Enemy>();
         Damage(enemy.damage);
         RefreshHealth();
+        RefreshArmor();
     }
 
     public void Damage(byte value)
     {
         
-        if (shield - value / 3 <= 0)
+        if (shield - value / 1.5 <= 0)
         {
-            Hurt(Convert.ToByte(shield / 1.5));
+            Hurt(Convert.ToByte(value / 1.5 - shield));
             shield = 0;
         }
         else
         {
-            shield -= Convert.ToByte(value / 3);
-            Hurt(Convert.ToByte(value / 1.5));
+            shield -= Convert.ToByte(value / 1.5);
+            Hurt(Convert.ToByte(value / 3));
         }
             
     }
@@ -63,7 +70,7 @@ public class BattleStatus : MonoBehaviour
             shield = MAX_HP;
         else
             shield += recover;
-        RefreshHealth();
+        RefreshArmor();
     }
 
     private void RefreshHealth()

@@ -1,15 +1,15 @@
 ﻿using UnityEngine;
 
-public class BonusHP : MonoBehaviour
+public class BonusAP : MonoBehaviour
 {
-    public byte hp = 50;
+    public byte ap = 50;
 
-    public void OnCollisionEnter(Collision collision)
+    public void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.layer != LayerMask.NameToLayer("Player"))
             return;
         BattleStatus ally = collision.transform.GetComponent<BattleStatus>();
-        ally.Heal(hp);
+        ally.Restore(ap);
         Destroy(gameObject);
     }
 }

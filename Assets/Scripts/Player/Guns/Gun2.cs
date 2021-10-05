@@ -14,11 +14,12 @@ public class Gun2 : MonoBehaviour
     public GameObject impactEffect;
 
     private float nextFire = 0.5f;
+    public string control = "Fire1";
+
     // Update is called once per frame 
     void Update()
     {
-        //if (Input.GetButton("Fire1"))
-        if (Input.GetButtonDown("Fire1") && Time.time >= nextFire)
+        if (Input.GetButtonDown(control) && Time.time >= nextFire)
         {
             nextFire = Time.time + 1f / fireRate;
             Shoot();

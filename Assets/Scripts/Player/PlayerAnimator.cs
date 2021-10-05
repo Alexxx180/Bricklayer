@@ -7,7 +7,6 @@ public class PlayerAnimator : MonoBehaviour
     void Update()
     {
         _animator.SetBool("isRun", KD(KeyCode.W) || KD(KeyCode.A) || KD(KeyCode.S) || KD(KeyCode.D));
-        Debug.Log(_animator.GetBool("isRun"));
         _animator.SetBool("isAttack", Input.GetButtonDown("Fire1"));
     }
     private bool KD(KeyCode code)
