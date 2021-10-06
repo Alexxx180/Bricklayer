@@ -13,7 +13,7 @@ public class Gun2 : MonoBehaviour
     public ParticleSystem muzzleFlash;
     public GameObject impactEffect;
 
-    private float nextFire = 0.5f;
+    public float nextFire = 0.5f;
     public string control = "Fire1";
 
     // Update is called once per frame 
