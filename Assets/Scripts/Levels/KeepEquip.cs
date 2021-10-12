@@ -31,7 +31,7 @@ public class KeepEquip : MonoBehaviour
         //Wait until we are done loading the scene 0.9
         while (scene.progress < 0.9f)
         {
-            Debug.Log("Loading scene " + " [][] Progress: " + scene.progress);
+            //Debug.Log("Loading scene " + " [][] Progress: " + scene.progress);
             yield return null;
         }
         //Activate the Scene
@@ -41,7 +41,7 @@ public class KeepEquip : MonoBehaviour
             // wait until it is really finished
             yield return null;
         }
-        Debug.Log("Done?");
+        //Debug.Log("Done?");
         OnFinishedLoadingAllScene();
     }
 
@@ -51,7 +51,7 @@ public class KeepEquip : MonoBehaviour
         Scene sceneToLoad = SceneManager.GetSceneByName(nameScene);
         if (sceneToLoad.IsValid())
         {
-            Debug.Log("Scene is Valid");
+            //Debug.Log("Scene is Valid");
             SceneManager.MoveGameObjectToScene(player, sceneToLoad);
             SceneManager.SetActiveScene(sceneToLoad);
             SceneManager.UnloadSceneAsync(previous);
@@ -61,6 +61,6 @@ public class KeepEquip : MonoBehaviour
     void OnFinishedLoadingAllScene()
     {
         enableScene();
-        Debug.Log("Done");
+        //Debug.Log("Done");
     }
 }

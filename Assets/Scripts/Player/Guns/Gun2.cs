@@ -1,10 +1,35 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using UnityEngine.UI;
 
-public class Gun2 : MonoBehaviour
+public class Gun2 : MonoBehaviour, IGunBase
 {
 
     public Camera fpsCam;
     // Start is called before the first frame update
+    [SerializeField]
+    private readonly ushort _INFINITE = 65535;
+    public ushort INFINITE => _INFINITE;
+
+    public ushort currentAmmo = 30;
+
+    [SerializeField]
+    private ushort _leftAmmo = 150;
+    public ushort leftAmmo {
+        get { return _leftAmmo; }
+        set { _leftAmmo = value; }
+    }
+
+    [SerializeField]
+    private ushort _maxAmmo = 150;
+    public ushort maxAmmo
+    {
+        get { return _maxAmmo; }
+        set { _maxAmmo = value; }
+    }
+
+    public ushort division = 30;
+    public Text ammo;
 
     public ushort damage = 10;
     public float range = 100f;
@@ -16,16 +41,59 @@ public class Gun2 : MonoBehaviour
     public float nextFire = 0.5f;
     public string control = "Fire1";
 
+    public void Restore(ushort bonus)
+    {
+        leftAmmo = MinAmmo(maxAmmo, leftAmmo + bonus);
+        RefreshAmmo();
+    }
+    public ushort MinAmmo(int min, int left)
+    {
+        return Convert.ToUInt16(Math.Min(min, left));
+    }
+    public ushort MaxAmmo(int min, int left)
+    {
+        return Convert.ToUInt16(Math.Max(min, left));
+    }
     // Update is called once per frame 
     void Update()
     {
         if (Input.GetButtonDown(control) && Time.time >= nextFire)
         {
             nextFire = Time.time + 1f / fireRate;
-            Shoot();
+            if (currentAmmo > 0)
+                Shoot();
+            Debug.Log(leftAmmo+"/"+maxAmmo);
+            AmmoCheck();
         }
     }
 
+    private void Awake()
+    {
+        if (impactEffect == null)
+            impactEffect = GameObject.Find("MuzzleFlash");
+    }
+    private void AmmoCheck()
+    {
+        if (maxAmmo >= INFINITE)
+            return;
+        currentAmmo = MaxAmmo(0, currentAmmo - 1);
+        ammo.text = currentAmmo + "/" + leftAmmo;
+        if (currentAmmo <= 0)
+        {
+            if (leftAmmo <= 0)
+            {
+                ammo.text = currentAmmo + "/" + leftAmmo;
+                return;
+            }
+            currentAmmo = MinAmmo(leftAmmo, division);
+            leftAmmo = MaxAmmo(0, leftAmmo - division);
+            RefreshAmmo();
+        }
+    }
+    public void RefreshAmmo()
+    {
+        ammo.text = currentAmmo + "/" + leftAmmo;
+    }
     private void Shoot()
     {
         muzzleFlash.Play();
@@ -36,7 +104,7 @@ public class Gun2 : MonoBehaviour
             if (target != null)
                 target.TakeDamage(damage);
         }
-
+        
         GameObject impactGO = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
         Destroy(impactGO, 2f);
     }

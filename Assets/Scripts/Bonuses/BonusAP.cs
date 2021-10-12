@@ -12,4 +12,5 @@ public class BonusAP : MonoBehaviour
         ally.Restore(ap);
         Destroy(gameObject);
     }
+    
 }

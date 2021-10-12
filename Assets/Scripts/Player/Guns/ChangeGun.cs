@@ -2,10 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ChangeGun : MonoBehaviour
 {
     public List<GameObject> Guns;
+    public List<GameObject> Ammo;
     private int CountGuns => Guns.Count;
     private int Selected = StartGun;
     private const int StartGun = 0;
@@ -26,8 +28,10 @@ public class ChangeGun : MonoBehaviour
 
     private void Change(int select)
     {
+        Ammo[Selected].SetActive(false);
         Guns[Selected].SetActive(false);
         Selected = select;
         Guns[Selected].SetActive(true);
+        Ammo[Selected].SetActive(true);
     }
 }
