@@ -44,6 +44,8 @@ public class GunAuto : MonoBehaviour, IGunBase
     // Update is called once per frame 
     void Update()
     {
+        if (Input.GetButtonDown("Reload") && maxAmmo < INFINITE)
+            AmmoCheck2();
         if (Input.GetButton(control) && Time.time >= nextFire)
         {
             nextFire = Time.time + 1f / fireRate;
@@ -67,16 +69,19 @@ public class GunAuto : MonoBehaviour, IGunBase
         currentAmmo = MaxAmmo(0, currentAmmo - 1);
         ammo.text = currentAmmo + "/" + leftAmmo;
         if (currentAmmo <= 0)
+            AmmoCheck2();
+    }
+    private void AmmoCheck2()
+    {
+        if (leftAmmo <= 0)
         {
-            if (leftAmmo <= 0)
-            {
-                ammo.text = currentAmmo + "/" + leftAmmo;
-                return;
-            }
-            currentAmmo = MinAmmo(leftAmmo, division);
-            leftAmmo = MaxAmmo(0, leftAmmo - division);
-            RefreshAmmo();
+            ammo.text = currentAmmo + "/" + leftAmmo;
+            return;
         }
+        ushort mem = currentAmmo;
+        currentAmmo = MinAmmo(leftAmmo, division);
+        leftAmmo = MaxAmmo(0, leftAmmo - division + mem);
+        RefreshAmmo();
     }
     public void Restore(ushort bonus)
     {
