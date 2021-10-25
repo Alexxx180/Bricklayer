@@ -61,6 +61,7 @@ public class KeepEquip : MonoBehaviour
     void OnFinishedLoadingAllScene()
     {
         enableScene();
+        
         //Debug.Log("Done");
     }
 }

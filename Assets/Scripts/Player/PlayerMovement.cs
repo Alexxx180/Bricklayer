@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform _ground;
     [SerializeField] private float _groundDistance = 0.4f;
     [SerializeField] private LayerMask _groundMask;
+    public BattleStatus status;
 
     byte jumps = 0;
     const byte maxJumps = 1;
@@ -31,6 +32,10 @@ public class PlayerMovement : MonoBehaviour
             _velocity.y = Mathf.Sqrt(_jumpHeight * _gravity * -2);
             jumps++;
         }
+        if (Input.GetButtonDown("FillHp"))
+            status.UseHpPack();
+        if (Input.GetButtonDown("FillAp"))
+            status.UseApPack();
         _velocity.y += _gravity * Time.deltaTime;
         _controller.Move(_velocity * Time.deltaTime);
         if (_isGrounded)

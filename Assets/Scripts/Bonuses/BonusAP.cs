@@ -9,7 +9,7 @@ public class BonusAP : MonoBehaviour
         if (collision.gameObject.layer != LayerMask.NameToLayer("Player"))
             return;
         BattleStatus ally = collision.transform.GetComponent<BattleStatus>();
-        ally.Restore(ap);
+        ally.Restore2(ap);
         Destroy(gameObject);
     }
     

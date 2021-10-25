@@ -9,11 +9,19 @@ public class BattleStatus : MonoBehaviour
     public Text hp;
     public Slider armor;
     public Text ap;
+    public Text hpPacks;
+    public Text apPacks;
     private byte MAX_HP = 100;
     private byte MAX_AP = 100;
 
     private byte vulnerability = 100;
     private byte shield = 0;
+
+    private const byte _MAX_HP_PACKS = 99;
+    private const byte _MAX_AP_PACKS = 99;
+
+    private byte _hpPacks = 0;
+    private byte _apPacks = 0;
 
     private void Start()
     {
@@ -50,9 +58,63 @@ public class BattleStatus : MonoBehaviour
     public void Hurt(byte value)
     {
         if (vulnerability - value <= 0)
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        {
+            UseHpPack2(value);
+            //if (_hpPacks > 0)
+            //    UseHpPack2(value);
+            //else
+            //    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
         else
             vulnerability -= value;
+    }
+
+    public void UseHpPack2(byte value)
+    {
+        short mem = value;
+        while (_hpPacks > 0 && vulnerability - mem + 50 >= 0)
+        {
+            mem -= 50;
+            _hpPacks--;
+        }
+        vulnerability = Convert.ToByte(Math.Max(vulnerability - mem, 0));
+        RefreshText(hpPacks, _hpPacks);
+        RefreshHealth();
+        if (vulnerability <= 0)
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void UseHpPack()
+    {
+        if (_hpPacks <= 0)
+            return;
+        vulnerability = Convert.ToByte(Math.Min(vulnerability + 50, MAX_HP));
+        _hpPacks--;
+        RefreshText(hpPacks, _hpPacks);
+        RefreshHealth();
+    }
+
+    public void UseApPack()
+    {
+        if (_apPacks <= 0)
+            return;
+        shield = Convert.ToByte(Math.Min(shield + 50, MAX_AP));
+        _apPacks--;
+        RefreshText(apPacks, _apPacks);
+        RefreshArmor();
+    }
+
+    public void Heal2(byte recover)
+    {
+        if (vulnerability >= MAX_HP)
+        {
+            if (_hpPacks >= _MAX_HP_PACKS)
+                return;
+            _hpPacks += Convert.ToByte(recover / 50);
+            RefreshText(hpPacks, _hpPacks);
+        }
+        else
+            Heal(recover);
     }
 
     public void Heal(byte recover)
@@ -64,6 +126,19 @@ public class BattleStatus : MonoBehaviour
         RefreshHealth();
     }
 
+    public void Restore2(byte recover)
+    {
+        if (shield >= MAX_AP)
+        {
+            if (_apPacks >= _MAX_AP_PACKS)
+                return;
+            _apPacks += Convert.ToByte(recover / 50);
+            RefreshText(apPacks, _apPacks);
+        }
+        else
+            Restore(recover);
+    }
+
     public void Restore(byte recover)
     {
         if (shield + recover > MAX_HP)
@@ -71,6 +146,16 @@ public class BattleStatus : MonoBehaviour
         else
             shield += recover;
         RefreshArmor();
+    }
+
+    private void RefreshText(Text text, string value)
+    {
+        text.text = value;
+    }
+
+    private void RefreshText(Text text, byte value)
+    {
+        RefreshText(text, value.ToString());
     }
 
     private void RefreshHealth()

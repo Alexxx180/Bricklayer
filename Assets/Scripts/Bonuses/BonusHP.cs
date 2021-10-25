@@ -9,7 +9,7 @@ public class BonusHP : MonoBehaviour
         if (collision.gameObject.layer != LayerMask.NameToLayer("Player"))
             return;
         BattleStatus ally = collision.transform.GetComponent<BattleStatus>();
-        ally.Heal(hp);
+        ally.Heal2(hp);
         Destroy(gameObject);
     }
 }
