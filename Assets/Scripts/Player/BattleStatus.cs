@@ -58,13 +58,7 @@ public class BattleStatus : MonoBehaviour
     public void Hurt(byte value)
     {
         if (vulnerability - value <= 0)
-        {
             UseHpPack2(value);
-            //if (_hpPacks > 0)
-            //    UseHpPack2(value);
-            //else
-            //    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        }
         else
             vulnerability -= value;
     }
