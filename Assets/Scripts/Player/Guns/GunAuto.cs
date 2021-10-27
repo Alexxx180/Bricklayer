@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class GunAuto : MonoBehaviour, IGunBase
 {
+    public AudioSource source;
+    public AudioSource reload;
     public Camera fpsCam;
     // Start is called before the first frame update
 
@@ -73,6 +75,7 @@ public class GunAuto : MonoBehaviour, IGunBase
     }
     private void AmmoCheck2()
     {
+        reload.Play();
         if (leftAmmo <= 0)
         {
             ammo.text = currentAmmo + "/" + leftAmmo;
@@ -94,6 +97,7 @@ public class GunAuto : MonoBehaviour, IGunBase
     }
     private void Shoot()
     {
+        source.Play();
         muzzleFlash.Play();
         RaycastHit hit;
         if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, range))

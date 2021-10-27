@@ -11,7 +11,7 @@ public class LoadLevel : MonoBehaviour
         if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
             SceneManager.LoadScene(nameScene);
-            SceneManager.MoveGameObjectToScene(player, SceneManager.GetSceneByName(nameScene));
+            //SceneManager.MoveGameObjectToScene(player, SceneManager.GetSceneByName(nameScene));
         }
     }
 }

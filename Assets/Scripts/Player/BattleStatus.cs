@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class BattleStatus : MonoBehaviour
 {
+    public AudioSource source;
     public Slider health;
     public Text hp;
     public Slider armor;
@@ -33,6 +34,7 @@ public class BattleStatus : MonoBehaviour
     {
         if (collision.gameObject.layer != LayerMask.NameToLayer("Enemy"))
             return;
+        source.Play();
         Enemy enemy = collision.transform.GetComponent<Enemy>();
         Damage(enemy.damage);
         RefreshHealth();
@@ -75,7 +77,10 @@ public class BattleStatus : MonoBehaviour
         RefreshText(hpPacks, _hpPacks);
         RefreshHealth();
         if (vulnerability <= 0)
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        {
+            SceneManager.LoadScene("Rain");
+            //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
     }
 
     public void UseHpPack()
