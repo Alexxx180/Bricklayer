@@ -5,6 +5,7 @@ using UnityEngine;
 public class TankShoot : MonoBehaviour
 {
     public GameObject target;
+    public int degree = 20;
     // Start is called before the first frmae update
     void Start()
     {
@@ -15,6 +16,6 @@ public class TankShoot : MonoBehaviour
     void Update()
     {
         // Spin the object around the target at 20 degrees/second.
-        transform.RotateAround(target.transform.position, Vector3.up, 20 * Time.deltaTime);
+        transform.RotateAround(target.transform.position, Vector3.up, degree * Time.deltaTime);
     }
 }

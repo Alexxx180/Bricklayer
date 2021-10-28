@@ -32,13 +32,31 @@ public class BattleStatus : MonoBehaviour
 
     public void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.layer != LayerMask.NameToLayer("Enemy"))
+        LayerMask mask = LayerMask.NameToLayer("Enemy");
+
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+            EnemyHurt(collision);
+        else if (collision.gameObject.layer == LayerMask.NameToLayer("CannonBall"))
+            Hit(collision);
+        else
             return;
+        
+        RefreshHealth();
+        RefreshArmor();
+    }
+
+    private void EnemyHurt(Collision collision)
+    {
         source.Play();
         Enemy enemy = collision.transform.GetComponent<Enemy>();
         Damage(enemy.damage);
-        RefreshHealth();
-        RefreshArmor();
+    }
+
+    private void Hit(Collision collision)
+    {
+        source.Play();
+        HitStat hitObject = collision.transform.GetComponent<HitStat>();
+        Damage(hitObject.damage);
     }
 
     public void Damage(byte value)
