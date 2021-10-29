@@ -4,7 +4,7 @@ using UnityEngine.AI;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private GameObject _player = null;
-    [SerializeField] private float distance;
+    [SerializeField] private float distance = 30;
 
     private NavMeshAgent _agent;
     public ushort health = 35;
@@ -28,6 +28,7 @@ public class Enemy : MonoBehaviour
     {
         if (_player == null)
             _player = GameObject.Find("Player2");
+        Debug.Log(_player);
         _agent = GetComponent<NavMeshAgent>();
     }
    

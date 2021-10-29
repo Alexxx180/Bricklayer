@@ -110,6 +110,11 @@ public class Gun2 : MonoBehaviour, IGunBase
             Enemy target = hit.transform.GetComponent<Enemy>();
             if (target != null)
                 target.TakeDamage(damage);
+            //Debug.Log(hit.transform.GetComponent<StaticEnemy>());
+            //Debug.Log(hit.transform.parent.transform.GetComponent<StaticEnemy>());
+            StaticEnemy target2 = hit.transform.parent.transform.GetComponent<StaticEnemy>();
+            if (target2 != null)
+                target2.TakeDamage(damage);
         }
         
         GameObject impactGO = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));

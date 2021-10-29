@@ -32,12 +32,12 @@ public class BattleStatus : MonoBehaviour
 
     public void OnCollisionEnter(Collision collision)
     {
-        LayerMask mask = LayerMask.NameToLayer("Enemy");
-
         if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
             EnemyHurt(collision);
         else if (collision.gameObject.layer == LayerMask.NameToLayer("CannonBall"))
             Hit(collision);
+        else if (collision.gameObject.layer == LayerMask.NameToLayer("StaticEnemy"))
+            EnemyHurt(collision);
         else
             return;
         
@@ -49,6 +49,13 @@ public class BattleStatus : MonoBehaviour
     {
         source.Play();
         Enemy enemy = collision.transform.GetComponent<Enemy>();
+        Damage(enemy.damage);
+    }
+
+    private void StaticEnemyHurt(Collision collision)
+    {
+        source.Play();
+        StaticEnemy enemy = collision.transform.GetComponent<StaticEnemy>();
         Damage(enemy.damage);
     }
 

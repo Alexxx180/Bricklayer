@@ -20,4 +20,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Levels/Rain.unity
     guid: 70af8d0902ca5d546a5d80d12c3eef37
+  - enabled: 1
+    path: Assets/Scenes/Levels/Ending.unity
+    guid: 51763bf956ec29f45b2fa79addbfa5a9
+  - enabled: 1
+    path: Assets/Scenes/Levels/FinalBoss.unity
+    guid: 69460352b60b01844bdf8a7c48691a15
   m_configObjects: {}
