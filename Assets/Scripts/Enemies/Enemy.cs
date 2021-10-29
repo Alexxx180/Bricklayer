@@ -9,7 +9,7 @@ public class Enemy : MonoBehaviour
     private NavMeshAgent _agent;
     public ushort health = 35;
     public byte damage = 12;
-
+    public byte damageFight = 20;
 
     public void TakeDamage(ushort damage)
     {
@@ -28,17 +28,21 @@ public class Enemy : MonoBehaviour
     {
         if (_player == null)
             _player = GameObject.Find("Player2");
-        Debug.Log(_player);
         _agent = GetComponent<NavMeshAgent>();
     }
-   
 
     // Update is called once per frame
    private void Update()
-    {
-        //if (_player == null)
-        //    return;
+   {
         _agent.SetDestination(_player.transform.position);
         _agent.isStopped = Vector3.Distance(transform.position, _player.transform.position) >= distance;
+   }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.layer == LayerMask.NameToLayer("Fight"))
+        {
+            TakeDamage(damageFight);
+        }
     }
 }
