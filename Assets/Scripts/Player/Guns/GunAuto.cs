@@ -105,6 +105,9 @@ public class GunAuto : MonoBehaviour, IGunBase
             Enemy target = hit.transform.GetComponent<Enemy>();
             if (target != null)
                 target.TakeDamage(damage);
+            StaticEnemy target2 = hit.transform.parent.transform.GetComponent<StaticEnemy>();
+            if (target2 != null)
+                target2.TakeDamage(damage);
         }
 
         if (impactEffect == null)

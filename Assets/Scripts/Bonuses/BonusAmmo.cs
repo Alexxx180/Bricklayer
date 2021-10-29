@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class BonusAmmo : MonoBehaviour
 {
+    public AudioSource source;
+
     public void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.layer != LayerMask.NameToLayer("Player"))
@@ -15,6 +17,7 @@ public class BonusAmmo : MonoBehaviour
             return;
         if (ally.leftAmmo >= ally.maxAmmo)
             return;
+        source.Play();
         ushort bonus = Convert.ToUInt16(ally.maxAmmo / 5);
         ally.Restore(bonus);
         Destroy(gameObject);

@@ -12,7 +12,7 @@ public class StaticEnemy : MonoBehaviour
 
     public Text hp;
     public Slider healthSl;
-    private const ushort MAX_HP = 100;
+    private const ushort MAX_HP = 10000;
     private bool _isDied;
 
     public void TakeDamage(ushort damage)
