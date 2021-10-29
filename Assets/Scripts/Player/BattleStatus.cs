@@ -104,7 +104,6 @@ public class BattleStatus : MonoBehaviour
         if (vulnerability <= 0)
         {
             SceneManager.LoadScene("Rain");
-            //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
 
