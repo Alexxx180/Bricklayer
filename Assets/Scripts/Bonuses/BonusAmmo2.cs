@@ -12,7 +12,9 @@ public class BonusAmmo2 : MonoBehaviour
         if (collision.gameObject.layer != LayerMask.NameToLayer("Player"))
             return;
         if (weapon == null)
-            weapon = GameObject.Find("Player2").transform.Find("Camera").gameObject.transform.Find(weaponClass).gameObject;
+            weapon = GameObject.Find("Player2").transform.Find("FirstFace").
+                gameObject.transform.Find("Weapons").
+                gameObject.transform.Find(weaponClass).gameObject;
 
         // If don't have weapon - don't restore ammo
         if (!weapon.activeSelf)
