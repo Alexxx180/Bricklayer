@@ -7,12 +7,14 @@ public class KeepEquip : MonoBehaviour
     public string nameScene;
     public GameObject player = null;
 
+    // Find main hero to transport with equipment
     private void Awake()
     {
         if (player == null)
             player = GameObject.Find("Character");
     }
 
+    // Go through portal
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
@@ -31,7 +33,6 @@ public class KeepEquip : MonoBehaviour
         //Wait until we are done loading the scene 0.9
         while (scene.progress < 0.9f)
         {
-            //Debug.Log("Loading scene " + " [][] Progress: " + scene.progress);
             yield return null;
         }
         //Activate the Scene
@@ -41,7 +42,6 @@ public class KeepEquip : MonoBehaviour
             // wait until it is really finished
             yield return null;
         }
-        //Debug.Log("Done?");
         OnFinishedLoadingAllScene();
     }
 
@@ -51,17 +51,15 @@ public class KeepEquip : MonoBehaviour
         Scene sceneToLoad = SceneManager.GetSceneByName(nameScene);
         if (sceneToLoad.IsValid())
         {
-            //Debug.Log("Scene is Valid");
             SceneManager.MoveGameObjectToScene(player, sceneToLoad);
             SceneManager.SetActiveScene(sceneToLoad);
             SceneManager.UnloadSceneAsync(previous);
         }
     }
 
+    // Only then all is done enable scene
     void OnFinishedLoadingAllScene()
     {
         enableScene();
-        
-        //Debug.Log("Done");
     }
 }

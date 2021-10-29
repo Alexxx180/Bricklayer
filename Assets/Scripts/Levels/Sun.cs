@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class Sun : MonoBehaviour
 {
@@ -16,10 +15,10 @@ public class Sun : MonoBehaviour
     void Update()
     {
         UpdateSun();
-        currentTimeOfDay += (Time.deltaTime / secondsInFullDay) * timeMultiplier;
-        if (currentTimeOfDay >= 1) { currentTimeOfDay = 0; }
+        CheckCurrentTime();
     }
 
+    //Day-night change
     void UpdateSun()
     {
         sun.transform.localRotation = Quaternion.Euler((currentTimeOfDay * 360f) - 90, 170, 0);
@@ -37,5 +36,12 @@ public class Sun : MonoBehaviour
             intensityMultiplier = Mathf.Clamp01(1 - ((currentTimeOfDay - 0.73f) * (1 / 0.02f)));
         }
         sun.intensity = sunInitialIntensity * intensityMultiplier;
+    }
+
+    private void CheckCurrentTime()
+    {
+        currentTimeOfDay += (Time.deltaTime / secondsInFullDay) * timeMultiplier;
+        if (currentTimeOfDay >= 1)
+            currentTimeOfDay = 0;
     }
 }

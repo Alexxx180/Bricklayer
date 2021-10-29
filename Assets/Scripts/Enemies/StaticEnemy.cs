@@ -15,6 +15,7 @@ public class StaticEnemy : MonoBehaviour
     private const ushort MAX_HP = 10000;
     private bool _isDied;
 
+    // Damage to static enemy
     public void TakeDamage(ushort damage)
     {
         if (_isDied)
@@ -33,10 +34,10 @@ public class StaticEnemy : MonoBehaviour
         hp.text = health + " / " + MAX_HP;
     }
 
+    // Epic voice clip with explosions
     async void Die()
     {
         health = 0;
-        //flash.gameObject.transform.position = gameObject.transform.position;
         show.SetActive(true);
         await System.Threading.Tasks.Task.Delay(3600);
         Destroy(gameObject);
