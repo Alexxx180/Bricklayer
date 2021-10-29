@@ -12,17 +12,25 @@ public class CameraChange : MonoBehaviour
     {
         if (Input.GetButtonDown("ViewSwitch"))
         {
-            if (CamMode == 1)
-            {
-                CamMode = 0;
-            }
-            else
-            {
-                CamMode += 1;
-            }
-            StartCoroutine(CanChange());
+            ChangeView();
         }
     }
+
+    // There we change view
+    void ChangeView()
+    {
+        if (CamMode == 1)
+        {
+            CamMode = 0;
+        }
+        else
+        {
+            CamMode += 1;
+        }
+        StartCoroutine(CanChange());
+    }
+
+    // Wait till we can change views then change them
     IEnumerator CanChange()
     {
         yield return new WaitForSeconds(0.1f);

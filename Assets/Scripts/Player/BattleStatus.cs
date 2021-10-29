@@ -24,12 +24,14 @@ public class BattleStatus : MonoBehaviour
     private byte _hpPacks = 0;
     private byte _apPacks = 0;
 
+    // Syncronize attributes with bars
     private void Start()
     {
         vulnerability = Convert.ToByte(health.value);
         shield = Convert.ToByte(armor.value);
     }
 
+    // Check player wounds from enemies
     public void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
@@ -45,6 +47,7 @@ public class BattleStatus : MonoBehaviour
         RefreshArmor();
     }
 
+    // Damage from enemy collision
     private void EnemyHurt(Collision collision)
     {
         source.Play();
@@ -52,13 +55,7 @@ public class BattleStatus : MonoBehaviour
         Damage(enemy.damage);
     }
 
-    private void StaticEnemyHurt(Collision collision)
-    {
-        source.Play();
-        StaticEnemy enemy = collision.transform.GetComponent<StaticEnemy>();
-        Damage(enemy.damage);
-    }
-
+    // Damage from cannonball and static objects collision
     private void Hit(Collision collision)
     {
         source.Play();
@@ -66,6 +63,7 @@ public class BattleStatus : MonoBehaviour
         Damage(hitObject.damage);
     }
 
+    // Calculate damage with and without shield
     public void Damage(byte value)
     {
         
@@ -82,6 +80,7 @@ public class BattleStatus : MonoBehaviour
             
     }
 
+    // Hurt hp or else use hp packs
     public void Hurt(byte value)
     {
         if (vulnerability - value <= 0)
@@ -90,6 +89,7 @@ public class BattleStatus : MonoBehaviour
             vulnerability -= value;
     }
 
+    // Auto-heal if have hp packs else teleport to death scene
     public void UseHpPack2(byte value)
     {
         short mem = value;
@@ -107,6 +107,7 @@ public class BattleStatus : MonoBehaviour
         }
     }
 
+    // Recover health if have hp packs
     public void UseHpPack()
     {
         if (_hpPacks <= 0)
@@ -117,6 +118,7 @@ public class BattleStatus : MonoBehaviour
         RefreshHealth();
     }
 
+    // Restore armor if have ap packs
     public void UseApPack()
     {
         if (_apPacks <= 0)
@@ -127,6 +129,7 @@ public class BattleStatus : MonoBehaviour
         RefreshArmor();
     }
 
+    // Heal with hp bonus or take new hp pack
     public void Heal2(byte recover)
     {
         if (vulnerability >= MAX_HP)
@@ -140,6 +143,7 @@ public class BattleStatus : MonoBehaviour
             Heal(recover);
     }
 
+    // Heal hp
     public void Heal(byte recover)
     {
         if (vulnerability + recover > MAX_HP)
@@ -149,6 +153,7 @@ public class BattleStatus : MonoBehaviour
         RefreshHealth();
     }
 
+    // Restore armor with ap bonus or take new ap pack
     public void Restore2(byte recover)
     {
         if (shield >= MAX_AP)
@@ -162,6 +167,7 @@ public class BattleStatus : MonoBehaviour
             Restore(recover);
     }
 
+    // Restore armor
     public void Restore(byte recover)
     {
         if (shield + recover > MAX_HP)

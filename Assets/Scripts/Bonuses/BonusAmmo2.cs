@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BonusAmmo2 : MonoBehaviour
@@ -8,12 +6,15 @@ public class BonusAmmo2 : MonoBehaviour
     public GameObject weapon = null;
     public string weaponClass = "AK";
 
+    // Grab weapon anyway - restore ammo if it is low
     public void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.layer != LayerMask.NameToLayer("Player"))
             return;
         if (weapon == null)
             weapon = GameObject.Find("Player2").transform.Find("Camera").gameObject.transform.Find(weaponClass).gameObject;
+
+        // If don't have weapon - don't restore ammo
         if (!weapon.activeSelf)
             return;
         IGunBase ally = collision.GetComponentInChildren<Gun2>();

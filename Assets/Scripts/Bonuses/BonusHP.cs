@@ -5,6 +5,7 @@ public class BonusHP : MonoBehaviour
     public AudioSource source;
     public byte hp = 50;
 
+    // Happens when collect hp bonus
     public void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.layer != LayerMask.NameToLayer("Player"))

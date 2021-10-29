@@ -9,8 +9,6 @@ public class Gun : MonoBehaviour
     [SerializeField] private Transform _spawnBullet;
     [SerializeField] private float _speedBullet;
 
-    //[SerializeField] private GameObject _player;
-
     private int _time = 0;
     private int _phaseTime = 0;
     public readonly int shootTime1 = 25;
@@ -21,24 +19,32 @@ public class Gun : MonoBehaviour
     public readonly int phase1 = 750;
     public readonly int phase2 = 500;
 
-    //public Camera _camera;
-
     // Update is called once per frame
     void Update()
+    {
+        PassPhaseTime();
+    }
+
+
+    // Passing time with phases
+    private void PassPhaseTime()
     {
         if (_phaseTime >= phase1 + phase2)
         {
             _phaseTime = 0;
-        } else if (_phaseTime >= phase1)
+        }
+        else if (_phaseTime >= phase1)
         {
             Phases(_bulletPrefab2, shootTime2);
-        } else
+        }
+        else
         {
             Phases(_bulletPrefab, shootTime1);
         }
         _phaseTime++;
     }
 
+    // Shoot phases
     private void Phases(GameObject ball, int shoot)
     {
         if (_time >= shoot)
@@ -49,6 +55,7 @@ public class Gun : MonoBehaviour
         _time++;
     }
 
+    // Shooting with bullet (cannon ball) prefabs
     private void Shoot(GameObject ball)
     {
         GameObject bullet = Instantiate(ball, _spawnBullet.position, Quaternion.identity);
@@ -57,7 +64,5 @@ public class Gun : MonoBehaviour
         body.AddForce(-_spawnBullet.transform.forward * _speedBullet);
         int optimize = Convert.ToInt32(lifetime);
         hitStat.FlareDelay(optimize * 1000);
-        //FlareDelay
-        //Destroy(bullet, lifetime);
     }
 }

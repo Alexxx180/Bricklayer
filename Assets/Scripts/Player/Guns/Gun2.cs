@@ -7,7 +7,7 @@ public class Gun2 : MonoBehaviour, IGunBase
     public AudioSource reload;
     public AudioSource source;
     public Camera fpsCam;
-    // Start is called before the first frame update
+    
     [SerializeField]
     private readonly ushort _INFINITE = 65535;
     public ushort INFINITE => _INFINITE;
@@ -42,11 +42,7 @@ public class Gun2 : MonoBehaviour, IGunBase
     public float nextFire = 0.5f;
     public string control = "Fire1";
 
-    public void Restore(ushort bonus)
-    {
-        leftAmmo = MinAmmo(maxAmmo, leftAmmo + bonus);
-        RefreshAmmo();
-    }
+    
     public ushort MinAmmo(int min, int left)
     {
         return Convert.ToUInt16(Math.Min(min, left));
@@ -55,6 +51,7 @@ public class Gun2 : MonoBehaviour, IGunBase
     {
         return Convert.ToUInt16(Math.Max(min, left));
     }
+
     // Update is called once per frame 
     void Update()
     {
@@ -69,11 +66,14 @@ public class Gun2 : MonoBehaviour, IGunBase
         }
     }
 
+    // Check map for flare effect to use for impact
     private void Awake()
     {
         if (impactEffect == null)
             impactEffect = GameObject.Find("MuzzleFlash");
     }
+
+    // Check ammo without reloading if current ammo is not low
     private void AmmoCheck()
     {
         if (maxAmmo >= INFINITE)
@@ -83,6 +83,8 @@ public class Gun2 : MonoBehaviour, IGunBase
         if (currentAmmo <= 0)
             AmmoCheck2();
     }
+
+    // Check ammo with reloading
     private void AmmoCheck2()
     {
         reload.Play();
@@ -96,10 +98,20 @@ public class Gun2 : MonoBehaviour, IGunBase
         leftAmmo = MaxAmmo(0, leftAmmo - division + mem);
         RefreshAmmo();
     }
+
+    // Restore ammo
+    public void Restore(ushort bonus)
+    {
+        leftAmmo = MinAmmo(maxAmmo, leftAmmo + bonus);
+        RefreshAmmo();
+    }
+
     public void RefreshAmmo()
     {
         ammo.text = currentAmmo + "/" + leftAmmo;
     }
+
+    // Shooting with Raycast
     private void Shoot()
     {
         source.Play();
@@ -110,8 +122,6 @@ public class Gun2 : MonoBehaviour, IGunBase
             Enemy target = hit.transform.GetComponent<Enemy>();
             if (target != null)
                 target.TakeDamage(damage);
-            //Debug.Log(hit.transform.GetComponent<StaticEnemy>());
-            //Debug.Log(hit.transform.parent.transform.GetComponent<StaticEnemy>());
             StaticEnemy target2 = hit.transform.parent.transform.GetComponent<StaticEnemy>();
             if (target2 != null)
                 target2.TakeDamage(damage);

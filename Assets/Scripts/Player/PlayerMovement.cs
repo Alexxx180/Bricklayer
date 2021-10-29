@@ -28,6 +28,7 @@ public class PlayerMovement : MonoBehaviour
         Refilling();
     }
 
+    // Movement functionality with animating
     void Movement()
     {
         float x = Input.GetAxis("Horizontal");
@@ -38,6 +39,7 @@ public class PlayerMovement : MonoBehaviour
         _controller.Move(move * _speed * Time.deltaTime);    
     }
 
+    // Jumping functionality with animating
     void Jumping()
     {   
         jump = Input.GetButtonDown("Jump") && jumps < maxJumps;
@@ -55,10 +57,10 @@ public class PlayerMovement : MonoBehaviour
         if (_isGrounded)
         {
             OnLanding();
-            jumps = 0;
         }
     }
 
+    // Refill hp-ap with health-armor packs
     void Refilling()
     {
         if (Input.GetButtonDown("FillHp"))
@@ -67,8 +69,10 @@ public class PlayerMovement : MonoBehaviour
             status.UseApPack();
     }
 
+    // When our player is landing - refresh jumps
     public void OnLanding()
     {
         _animator.SetBool("isJump", false);
+        jumps = 0;
     }
 }
