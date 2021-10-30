@@ -16,7 +16,7 @@ public class BonusAmmo2 : MonoBehaviour
                 gameObject.transform.Find("Weapons").
                 gameObject.transform.Find(weaponClass).gameObject;
 
-        // If don't have weapon - don't restore ammo
+        // If weapon not selected - don't restore ammo
         if (!weapon.activeSelf)
             return;
         IGunBase ally = collision.GetComponentInChildren<Gun2>();

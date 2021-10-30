@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -69,7 +67,7 @@ public class GunAuto : MonoBehaviour, IGunBase
         if (maxAmmo >= INFINITE)
             return;
         currentAmmo = MaxAmmo(0, currentAmmo - 1);
-        ammo.text = currentAmmo + "/" + leftAmmo;
+        ammo.text = currentAmmo + " / " + leftAmmo;
         if (currentAmmo <= 0)
             AmmoCheck2();
     }
@@ -78,7 +76,7 @@ public class GunAuto : MonoBehaviour, IGunBase
         reload.Play();
         if (leftAmmo <= 0)
         {
-            ammo.text = currentAmmo + "/" + leftAmmo;
+            ammo.text = currentAmmo + " / " + leftAmmo;
             return;
         }
         ushort mem = currentAmmo;
@@ -93,7 +91,7 @@ public class GunAuto : MonoBehaviour, IGunBase
     }
     public void RefreshAmmo()
     {
-        ammo.text = currentAmmo + "/" + leftAmmo;
+        ammo.text = currentAmmo + " / " + leftAmmo;
     }
     private void Shoot()
     {

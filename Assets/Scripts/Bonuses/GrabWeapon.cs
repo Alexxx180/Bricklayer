@@ -3,8 +3,8 @@
 public class GrabWeapon : MonoBehaviour
 {
     public GameObject weapon = null;
-    public string nameWeapon = "Ak48";
     public string weaponClass = "AK";
+    public string nameWeapon = "Ak48";
 
     // Happens when grab new or old weapon
     public void OnTriggerEnter(Collider collision)

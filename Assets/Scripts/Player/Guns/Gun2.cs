@@ -79,7 +79,7 @@ public class Gun2 : MonoBehaviour, IGunBase
         if (maxAmmo >= INFINITE)
             return;
         currentAmmo = MaxAmmo(0, currentAmmo - 1);
-        ammo.text = currentAmmo + "/" + leftAmmo;
+        ammo.text = currentAmmo + " / " + leftAmmo;
         if (currentAmmo <= 0)
             AmmoCheck2();
     }
@@ -90,7 +90,7 @@ public class Gun2 : MonoBehaviour, IGunBase
         reload.Play();
         if (leftAmmo <= 0)
         {
-            ammo.text = currentAmmo + "/" + leftAmmo;
+            ammo.text = currentAmmo + " / " + leftAmmo;
             return;
         }
         ushort mem = currentAmmo;
@@ -108,7 +108,7 @@ public class Gun2 : MonoBehaviour, IGunBase
 
     public void RefreshAmmo()
     {
-        ammo.text = currentAmmo + "/" + leftAmmo;
+        ammo.text = currentAmmo + " / " + leftAmmo;
     }
 
     // Shooting with Raycast
@@ -126,7 +126,9 @@ public class Gun2 : MonoBehaviour, IGunBase
             if (target2 != null)
                 target2.TakeDamage(damage);
         }
-        
+
+        if (impactEffect == null)
+            impactEffect = GameObject.Find("MuzzleFlash");
         GameObject impactGO = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
         Destroy(impactGO, 2f);
     }
