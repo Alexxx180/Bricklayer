@@ -49,15 +49,15 @@ public class PlayerMovement : MonoBehaviour
             _velocity.y = Mathf.Sqrt(_jumpHeight * _gravity * -2);
             jumps++;
         }
-        
-        _velocity.y += _gravity * Time.deltaTime;
-        _controller.Move(_velocity * Time.deltaTime);
 
         _isGrounded = Physics.CheckSphere(_ground.position, _groundDistance, _groundMask);
         if (_isGrounded)
         {
             OnLanding();
         }
+
+        _velocity.y += _gravity * Time.deltaTime;
+        _controller.Move(_velocity * Time.deltaTime);
     }
 
     // Refill hp-ap with health-armor packs
