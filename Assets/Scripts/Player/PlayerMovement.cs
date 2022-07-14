@@ -10,7 +10,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform _ground;
     [SerializeField] private float _groundDistance = 0.4f;
     [SerializeField] private LayerMask _groundMask;
-    [SerializeField] private Animator _animator;
     public BattleStatus status;
 
 
@@ -34,9 +33,10 @@ public class PlayerMovement : MonoBehaviour
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
 
-        _animator.SetFloat("isMove", Mathf.Max(Mathf.Abs(x), Mathf.Abs(z)));
+        float speed = _speed * (Input.GetButton("Run") ? 2 : 1);
+
         Vector3 move = transform.right * x + transform.forward * z;
-        _controller.Move(move * _speed * Time.deltaTime);    
+        _controller.Move(move * speed * Time.deltaTime);    
     }
 
     // Jumping functionality with animating
@@ -45,7 +45,6 @@ public class PlayerMovement : MonoBehaviour
         jump = Input.GetButtonDown("Jump") && jumps < maxJumps;
         if (jump)
         {
-            _animator.SetBool("isJump", true);
             _velocity.y = Mathf.Sqrt(_jumpHeight * _gravity * -2);
             jumps++;
         }
@@ -72,7 +71,6 @@ public class PlayerMovement : MonoBehaviour
     // When our player is landing - refresh jumps
     public void OnLanding()
     {
-        _animator.SetBool("isJump", false);
         jumps = 0;
     }
 }
