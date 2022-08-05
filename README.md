@@ -1,3 +1,3 @@
 # Bricklayer Shooter
 
-Simple first-face shooter. Powered by Unity™. 
+Simple first person shooter. Powered by Unityâ„¢. 
